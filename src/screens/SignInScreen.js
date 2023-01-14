@@ -9,6 +9,17 @@ function SignInScreen() {
             <input placeholder="Email" type="email" />
             <input placeholder="Password" type="password"/>
             <button type="submit"> Sign in</button>
+
+            <h4>
+                <span className="signupscreengray">
+                New to Netfix? 
+                </span>
+                <span>
+                Sign Up Now.
+                </span>
+                
+                 
+            </h4>
             
         </form>
 
