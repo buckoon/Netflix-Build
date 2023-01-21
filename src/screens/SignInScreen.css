@@ -27,6 +27,10 @@
     color:#fff;
     border-radius: 5px;
     background-color: #e50914;
+    font-weight:600;
+    border:none;
+    cursor:pointer;
+    margin-top:20px;
 }
 
 .signupscreengray{
@@ -35,8 +39,18 @@
 
 }
 
+.SignInScreen > form > h1{
+    text-align: left;
+    margin-bottom:25px;
+}
+
 .SignInScreen > form > h4{
     text-align: left;
     margin-top: 30px;
+}
+
+.signupScreen_link{
+    cursor: pointer;
+    text-decoration: underline;
 }
 

@@ -11,7 +11,7 @@ padding: 20px;
 
 }
 
-.row_posters::-webkit-scrollbar {
+.row_posters::-webkit-scrollbar {/*how to hide the scroll bar*/
     display:none;
 }
 .row_poster{
@@ -26,4 +26,8 @@ padding: 20px;
 .row_poster:hover{
     transform: scale(1.08);
     opacity: 1;
+}
+
+.row_posterLarge{
+    max-height:250px;
 }
