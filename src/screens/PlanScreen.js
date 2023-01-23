@@ -83,7 +83,7 @@ function PlanScreen() {
         //we have a session, lets redirect to checkout
         //init stripe
   
-        const stripe = await loadStripe("pk_test_51MS0t5B2Q2Sv9OKuJGfXyccMh0tDxdhoLx2jTr1XxozWzAo5EUUpmV5n18oEk3otSug0bP0EVd672tWqD1rCNn4I00W5yvovus")/*publishable key*/ 
+        const stripe = await loadStripe("XXXXXXXXXXXXXXXX")/*publishable key*/ 
   
         stripe.redirectToCheckout({sessionId});
       }
