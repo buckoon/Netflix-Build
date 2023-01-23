@@ -8,6 +8,30 @@ import { loadStripe } from "@stripe/stripe-js";
 function PlanScreen() {
   const [products, setProducts] = useState({});
   const user = useSelector(selectUser);
+  const [subscription, setSubscription]= useState(null);
+
+
+  useEffect(()=>{
+    db.collection('customers')
+    .doc(user.uid)
+    .collection('subscriptions')
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(async (subscription) => {
+            setSubscription({
+              role: subscription.data().role,
+              current_period_end: subscription.data().current_period_end
+              .seconds,
+              current_period_start: subscription.data().current_period_end
+              .seconds,
+            });
+
+      })
+    })
+
+  }, [user.uid]);
+
+  console.log(subscription);
 
   useEffect(() => {
     db.collection('products')
@@ -33,6 +57,7 @@ function PlanScreen() {
       });
   }, []);
 
+  console.log(subscription);
   const loadCheckout = async (priceId) => {
     console.log('loadCheckout function called');
     const docRef = await db.collection("customers")
@@ -58,7 +83,7 @@ function PlanScreen() {
         //we have a session, lets redirect to checkout
         //init stripe
   
-        const stripe = await loadStripe("pk_test_51MS0t5B2Q2Sv9OKuJGfXyccMh0tDxdhoLx2jTr1XxozWzAo5EUUpmV5n18oEk3otSug0bP0EVd672tWqD1rCNn4I00W5yvovus")
+        const stripe = await loadStripe("pk_test_51MS0t5B2Q2Sv9OKuJGfXyccMh0tDxdhoLx2jTr1XxozWzAo5EUUpmV5n18oEk3otSug0bP0EVd672tWqD1rCNn4I00W5yvovus")/*publishable key*/ 
   
         stripe.redirectToCheckout({sessionId});
       }
@@ -68,14 +93,28 @@ function PlanScreen() {
   return (
     <div className="plansScreen">
       {Object.entries(products).map(([productId, productData]) => {
+
+        const isCurrentPackage= productData.name
+        ?.toLowerCase()
+        .includes(subscription?.role);
+
         return (
           <div className="planScreen_plan">
             <div className="planScreen_info">
               <h5>{productData.name}</h5>
               <h6>{productData.description}</h6>
             </div>
-            <button onClick={() => {console.log("Button clicked"); loadCheckout(productData.prices.priceId)}}>Subscribe</button>
 
+            <button 
+              onClick={() => 
+                  !isCurrentPackage && loadCheckout(productData.prices.priceId)
+                }
+              >
+                  {isCurrentPackage ? "Current Package":"subscribe"}
+                
+                
+            </button>
+              
           </div>
         );
       })}
